@@ -18,7 +18,7 @@ const MONGODB = process.env.MONGODB;
 // define server
 export const app = express();
 
-//define basic middlewares
+// define basic middlewares
 app.use(express.json());
 app.use(helmet());
 app.use(
@@ -28,10 +28,17 @@ app.use(
   })
 );
 
-// define swagger options
+// define swagger middlewares
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-app.use('/', testRouter);
+// define server router
+app.use('/api', testRouter);
+
+app.use('/', (req, res, next) => {
+  res.redirect('/api-docs');
+});
+
+// define error middlewares
 app.use(errorMiddleware);
 
 mongoose
