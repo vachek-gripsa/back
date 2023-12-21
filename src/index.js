@@ -8,10 +8,10 @@ import swaggerUi from 'swagger-ui-express';
 import { swaggerDocs } from './config/swaggerConfig.js';
 import { errorMiddleware } from './middleware/errorMiddleware.js';
 import { testRouter } from './routes/testRouter.js';
+import { logger } from './config/winstonConfig.js';
 
 dotenv.config();
 
-const SECRET = process.env.SECRET;
 const PORT = process.env.PORT || 4444;
 const MONGODB = process.env.MONGODB;
 
@@ -30,6 +30,14 @@ app.use(
 
 // define swagger options
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+// add winston logger to app
+app.use((req, res, next) => {
+  const date = new Date().toUTCString();
+  const logMessage = `${date} "${req.method} ${req.originalUrl}" ${res.statusCode} - "${req.headers['user-agent']}"`;
+  logger.info(logMessage);
+  next();
+});
 
 app.use('/', testRouter);
 app.use(errorMiddleware);
