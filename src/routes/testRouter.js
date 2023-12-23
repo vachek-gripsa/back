@@ -14,22 +14,22 @@ export const testRouter = express.Router();
 /**
  * @swagger
  * paths:
- *   /:
+ *   /api/test:
  *     get:
- *       summary: Returns a welcome message
+ *       summary: Returns some test message
  *       tags: [Test]
  *       responses:
  *         '200':
- *           description: A successful response
+ *           description: Success
  *           content:
  *             application/json:
  *               example:
  *                 message: Hello from server!
  *         '500':
- *           description: Internal Server Error
+ *           description: Error
  *           content:
  *             application/json:
  *               example:
- *                 error: Internal Server Error
+ *                 message: Some error occurred!
  */
-testRouter.get('/', getTestMessage);
+testRouter.get('/test', getTestMessage);

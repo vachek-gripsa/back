@@ -1,8 +1,8 @@
-import express from 'express';
-import mongoose from 'mongoose';
 import cors from 'cors';
-import helmet from 'helmet';
 import dotenv from 'dotenv';
+import express from 'express';
+import helmet from 'helmet';
+import mongoose from 'mongoose';
 import swaggerUi from 'swagger-ui-express';
 
 import { swaggerDocs } from './config/swaggerConfig.js';
@@ -11,14 +11,14 @@ import { testRouter } from './routes/testRouter.js';
 
 dotenv.config();
 
-const SECRET = process.env.SECRET;
+// const SECRET = process.env.SECRET;
 const PORT = process.env.PORT || 4444;
 const MONGODB = process.env.MONGODB;
 
 // define server
 export const app = express();
 
-//define basic middlewares
+// define basic middlewares
 app.use(express.json());
 app.use(helmet());
 app.use(
@@ -28,10 +28,17 @@ app.use(
   })
 );
 
-// define swagger options
+// define swagger middlewares
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-app.use('/', testRouter);
+// define server router
+app.use('/api', testRouter);
+
+app.use('/', (req, res) => {
+  res.redirect('/api-docs');
+});
+
+// define error middlewares
 app.use(errorMiddleware);
 
 mongoose
