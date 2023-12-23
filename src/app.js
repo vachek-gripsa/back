@@ -31,5 +31,12 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/', testRouter);
+// define server router
+app.use('/api', testRouter);
+
+app.use('/', (req, res, next) => {
+  res.redirect('/api-docs');
+});
+
+// define error middlewares
 app.use(errorMiddleware);
