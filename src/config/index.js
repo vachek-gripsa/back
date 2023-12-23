@@ -1,1 +1,2 @@
-export { swaggerDocs } from './swaggerConfig';
+export * from './swaggerConfig.js';
+export * from './winstonConfig.js';

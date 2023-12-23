@@ -3,10 +3,9 @@ import cors from 'cors';
 import helmet from 'helmet';
 import swaggerUi from 'swagger-ui-express';
 
-import { swaggerDocs } from './config/swaggerConfig.js';
-import { errorMiddleware } from './middleware/errorMiddleware.js';
-import { testRouter } from './routes/testRouter.js';
-import { logger } from './config/winstonConfig.js';
+import { swaggerDocs, logger } from './config/index.js';
+import { errorMiddleware } from './middleware/index.js';
+import { testRouter } from './routes/index.js';
 
 // define server
 export const app = express();

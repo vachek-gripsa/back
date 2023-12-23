@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { getTestMessage } from '../controllers/testController.js';
+import { getTestMessage } from '../controllers/index.js';
 
 export const testRouter = express.Router();
 
