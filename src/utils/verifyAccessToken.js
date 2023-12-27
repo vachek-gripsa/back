@@ -1,5 +1,5 @@
-import jsonwebtoken from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import jsonwebtoken from 'jsonwebtoken';
 
 dotenv.config();
 
@@ -10,7 +10,9 @@ export const verifyAccessToken = token => {
     const decodedToken = jsonwebtoken.verify(token, secret);
     return decodedToken;
   } catch (error) {
-    error.statusCode = 500;
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
     throw error;
   }
 };

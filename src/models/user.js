@@ -19,34 +19,24 @@ const userSchema = new Schema({
   avatar: {
     type: String
   },
-  contacts: [
-    {
-      email: {
-        type: String,
-        required: true
-      }
+  contacts: {
+    email: {
+      type: String,
+      required: true
     },
-    {
-      phoneNumber: {
-        type: String
-      }
+    phoneNumber: {
+      type: String
     },
-    {
-      telegram: {
-        type: String
-      }
+    telegram: {
+      type: String
     },
-    {
-      linkedin: {
-        type: String
-      }
+    linkedinProfile: {
+      type: String
     },
-    {
-      github: {
-        type: String
-      }
+    githubProfile: {
+      type: String
     }
-  ],
+  },
   financialProjects: [
     {
       type: Schema.Types.ObjectId,

@@ -1,4 +1,4 @@
-export const errorMiddleware = (error, req, res, next) => {
+export const errorMiddleware = (error, req, res) => {
   console.error(error);
   const status = error.statusCode || 500;
   const message = error.message || 'Some error occurred';
