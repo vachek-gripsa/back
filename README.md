@@ -3,7 +3,6 @@
 back for project
 
 ## Technology stack:
-
 - node.js
 - express.js
 - swagger

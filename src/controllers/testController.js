@@ -1,8 +1,10 @@
-export const getTestMessage = async (req, res, next) => {
+export const getTestMessage = async (req, res) => {
   try {
     res.status(200).json({ message: 'Hello from server!' });
   } catch (error) {
-    console.error(error);
-    next(error);
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+    throw error;
   }
 };

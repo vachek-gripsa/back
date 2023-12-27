@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { getTestMessage } from '../controllers/testController.js';
+import { getTestMessage } from '../controllers/index.js';
 
 export const testRouter = express.Router();
 
@@ -16,7 +16,7 @@ export const testRouter = express.Router();
  * paths:
  *   /api/test:
  *     get:
- *       summary: Returns some test message
+ *       summary: Return some test message
  *       tags: [Test]
  *       responses:
  *         '200':
@@ -32,4 +32,4 @@ export const testRouter = express.Router();
  *               example:
  *                 message: Some error occurred!
  */
-testRouter.get('/test', getTestMessage);
+testRouter.get('/', getTestMessage);
