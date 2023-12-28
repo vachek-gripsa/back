@@ -71,13 +71,17 @@ export const signin = async (req, res) => {
     const accessToken = generateAccessToken(dbUser._id);
     const refreshToken = generateRefreshToken(dbUser._id);
     delete dbUser.password;
-    res.cookie('refreshToken', refreshToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'None',
-      maxAge: 24 * 60 * 60 * 1000
-    });
-    res.status(200).json({ user: dbUser, accessToken: accessToken });
+    res.setHeader('Set-Cookie', [
+      `accessToken=${accessToken}; HttpOnly; Secure; SameSite=None; Max-Age=${24 * 60 * 60}`,
+      `refreshToken=${refreshToken}; HttpOnly; Secure; SameSite=None; Max-Age=${24 * 60 * 60}`
+    ]);
+    // res.cookie('refreshToken', refreshToken, {
+    //   // httpOnly: true,
+    //   // secure: true,
+    //   // sameSite: 'None',
+    //   maxAge: 24 * 60 * 60 * 1000
+    // });
+    res.status(200).json({ user: dbUser, accessToken, refreshToken });
   } catch (error) {
     if (!error.statusCode) {
       error.statusCode = 500;
