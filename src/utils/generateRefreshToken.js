@@ -6,5 +6,7 @@ dotenv.config();
 const secret = process.env.SECRET_REFRESH;
 
 export const generateRefreshToken = userId => {
-  return jsonwebtoken.sign({ userId }, secret, { expiresIn: '24h' });
+  const expiresIn = '24h';
+  const validTo = Date.now() + 24 * 60 * 60 * 1000;
+  return jsonwebtoken.sign({ validTo, userId, type: 'refresh' }, secret, { expiresIn });
 };

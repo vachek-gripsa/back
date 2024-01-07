@@ -1,10 +1,12 @@
 import { User } from '../models/index.js';
-import { getUserByEmail } from '../services/index.js';
+import { getUserByEmail, getUserById } from '../services/index.js';
 import {
   hashPassword,
   comparePassword,
   generateAccessToken,
-  generateRefreshToken
+  generateRefreshToken,
+  verifyRefreshToken,
+  setCookies
 } from '../utils/index.js';
 
 export const signup = async (req, res) => {
@@ -43,7 +45,7 @@ export const signup = async (req, res) => {
       }
     });
     await user.save();
-    res.status(201).json({ message: 'User created' });
+    res.status(201).json({ message: 'User created successfully' });
   } catch (error) {
     if (!error.statusCode) {
       error.statusCode = 500;
@@ -68,16 +70,65 @@ export const signin = async (req, res) => {
       error.statusCode = 401;
       throw error;
     }
-    const accessToken = generateAccessToken(dbUser._id);
+    const accessToken = generateAccessToken(dbUser._id, dbUser.contacts.email);
     const refreshToken = generateRefreshToken(dbUser._id);
     delete dbUser.password;
-    res.cookie('refreshToken', refreshToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'None',
-      maxAge: 24 * 60 * 60 * 1000
+    const cookies = setCookies(true, 60 * 60 * 24, accessToken, refreshToken);
+    res.setHeader('Set-Cookie', cookies);
+    res.status(200).json({
+      message: 'User signed in successfully',
+      user: dbUser,
+      token: {
+        accessToken,
+        refreshToken
+      }
     });
-    res.status(200).json({ user: dbUser, accessToken: accessToken });
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+    throw error;
+  }
+};
+
+export const refresh = async (req, res) => {
+  try {
+    const authHeader = req.get('Authorization');
+    if (!authHeader) {
+      const error = new Error('Not authenticated');
+      error.statusCode = 401;
+      throw error;
+    }
+    const token = authHeader.split(' ')[1];
+    const decodedToken = verifyRefreshToken(token);
+    if (!decodedToken) {
+      const error = new Error('Invalid refresh token');
+      error.statusCode = 401;
+      throw error;
+    }
+    const dbUser = await getUserById(decodedToken.userId);
+    const accessToken = generateAccessToken(dbUser._id, dbUser.contacts.email);
+    const cookies = setCookies(false, 60 * 60 * 24, accessToken);
+    res.setHeader('Set-Cookie', cookies);
+    res.status(200).json({
+      message: 'New access token',
+      token: accessToken
+    });
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+    throw error;
+  }
+};
+
+export const signout = async (req, res) => {
+  try {
+    console.log(req.cookies);
+    const cookies = setCookies(true, 0);
+    console.log(cookies);
+    res.setHeader('Set-Cookie', cookies);
+    res.status(200).json({ message: 'User signed out successfully' });
   } catch (error) {
     if (!error.statusCode) {
       error.statusCode = 500;

@@ -7,9 +7,15 @@ const swaggerOptions = {
       title: 'Server API',
       version: '1.0.0',
       description: 'Description of API endpoints'
-    }
+    },
+    schemes: ['http']
   },
-  apis: ['./src/routes/*.js']
+  security: [
+    {
+      BearerAuth: []
+    }
+  ],
+  apis: ['./src/swagger/*.js']
 };
 
 export const swaggerDocs = swaggerJsdoc(swaggerOptions);

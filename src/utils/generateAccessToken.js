@@ -6,5 +6,7 @@ dotenv.config();
 const secret = process.env.SECRET_ACCESS;
 
 export const generateAccessToken = userId => {
-  return jsonwebtoken.sign({ userId }, secret, { expiresIn: '15m' });
+  const expiresIn = '15m';
+  const validTo = Date.now() + 15 * 60 * 1000;
+  return jsonwebtoken.sign({ validTo, userId, type: 'access' }, secret, { expiresIn });
 };

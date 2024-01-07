@@ -11,3 +11,15 @@ export const getUserByEmail = async email => {
     throw error;
   }
 };
+
+export const getUserById = async id => {
+  try {
+    const user = await User.findById(id);
+    return user;
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+    throw error;
+  }
+};
