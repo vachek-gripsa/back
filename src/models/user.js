@@ -36,13 +36,7 @@ const userSchema = new Schema({
     githubProfile: {
       type: String
     }
-  },
-  financialProjects: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'FinancialProject'
-    }
-  ]
+  }
 });
 
 export const User = model('User', userSchema);

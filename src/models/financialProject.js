@@ -5,6 +5,11 @@ const financialProjectSchema = new Schema({
     type: String,
     required: true
   },
+  autor: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
   users: [
     {
       type: Schema.Types.ObjectId,

@@ -10,10 +10,11 @@ export const authMiddleware = (req, res, next) => {
   const token = authHeader.split(' ')[1];
   const decodedToken = verifyAccessToken(token);
   if (!decodedToken) {
-    const error = new Error('Not authenticated');
+    const error = new Error('Invalid access token');
     error.statusCode = 401;
     throw error;
   }
   req.userId = decodedToken.userId;
+  req.email = decodedToken.email;
   next();
 };

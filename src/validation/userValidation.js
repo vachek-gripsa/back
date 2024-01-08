@@ -21,12 +21,16 @@ export const userValidation = [
     .withMessage('The password must contain an uppercase letter, a number and a special character')
     .custom(value => !/\s/.test(value))
     .withMessage('The password must not contain spaces in the middle'),
-  check('email').isEmail().withMessage('Please enter a valid email').trim().normalizeEmail(),
+  check('email')
+    .customSanitizer(value => value.toLowerCase())
+    .isEmail()
+    .withMessage('Please enter a valid email')
+    .trim(),
   check('userName')
     .optional({ nullable: true, checkFalsy: true })
     .trim()
     .isString()
-    .withMessage('Please enter a valid user name number'),
+    .withMessage('Please enter a valid user name'),
   check('phoneNumber')
     .optional({ nullable: true, checkFalsy: true })
     .isString()
@@ -44,11 +48,11 @@ export const userValidation = [
   check('githubProfile')
     .optional({ nullable: true, checkFalsy: true })
     .isString()
-    .custom(value => /^https:\/\/github\.com\/[a-zA-Z0-9_-]+$/.test(value))
+    .matches(/^https:\/\/github\.com\//)
     .withMessage('Please enter a valid GitHub profile link'),
-  check('linkedInProfile')
+  check('linkedinProfile')
     .optional({ nullable: true, checkFalsy: true })
     .isString()
-    .custom(value => /^https:\/\/www\.linkedin\.com\/in\/[a-zA-Z0-9-]+$/.test(value))
+    .matches(/^https:\/\/www\.linkedin\.com\/in\//)
     .withMessage('Please enter a valid LinkedIn profile link')
 ];
