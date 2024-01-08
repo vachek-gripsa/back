@@ -16,13 +16,13 @@ export const app = express();
 app.use(helmet());
 app.use(cors(headers));
 
-/* define basic parsing middlewares */
-app.use(bodyParser.json());
-app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'));
-app.use('/images', express.static('images'));
-
 /* define swagger options */
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+/* define basic parsing middlewares */
+app.use(bodyParser.json());
+app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('avatar'));
+app.use('/images', express.static('images'));
 
 /* add winston logger to app */
 app.use((req, res, next) => {

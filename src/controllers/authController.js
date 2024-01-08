@@ -9,7 +9,8 @@ import {
   setCookies
 } from '../utils/index.js';
 
-export const signup = async (req, res) => {
+export const signup = async (req, res, next) => {
+  console.log(req);
   const avatar = req.file?.path;
   const {
     firstName,
@@ -20,7 +21,7 @@ export const signup = async (req, res) => {
     phoneNumber,
     telegram,
     githubProfile,
-    linkedInProfile
+    linkedinProfile
   } = req.body;
   try {
     const dbUser = await getUserByEmail(email);
@@ -41,7 +42,7 @@ export const signup = async (req, res) => {
         phoneNumber,
         telegram,
         githubProfile,
-        linkedInProfile
+        linkedinProfile
       }
     });
     await user.save();
@@ -50,11 +51,11 @@ export const signup = async (req, res) => {
     if (!error.statusCode) {
       error.statusCode = 500;
     }
-    throw error;
+    next(error);
   }
 };
 
-export const signin = async (req, res) => {
+export const signin = async (req, res, next) => {
   const { password, email } = req.body;
   try {
     const dbUser = await getUserByEmail(email);
@@ -87,11 +88,11 @@ export const signin = async (req, res) => {
     if (!error.statusCode) {
       error.statusCode = 500;
     }
-    throw error;
+    next(error);
   }
 };
 
-export const refresh = async (req, res) => {
+export const refresh = async (req, res, next) => {
   try {
     const authHeader = req.get('Authorization');
     if (!authHeader) {
@@ -118,11 +119,11 @@ export const refresh = async (req, res) => {
     if (!error.statusCode) {
       error.statusCode = 500;
     }
-    throw error;
+    next(error);
   }
 };
 
-export const signout = async (req, res) => {
+export const signout = async (req, res, next) => {
   try {
     console.log(req.cookies);
     const cookies = setCookies(true, 0);
@@ -133,6 +134,6 @@ export const signout = async (req, res) => {
     if (!error.statusCode) {
       error.statusCode = 500;
     }
-    throw error;
+    next(error);
   }
 };

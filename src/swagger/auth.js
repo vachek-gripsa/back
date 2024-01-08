@@ -32,18 +32,18 @@
  *                   description: User's username
  *                 phoneNumber:
  *                   type: string
- *                   description: User's phone number in international format (e.g., +1234567890)
+ *                   description: User's phone number in international format (e.g., 1234567890)
  *                 telegram:
  *                   type: string
  *                   description: User's Telegram username
  *                 githubProfile:
  *                   type: string
  *                   description: User's GitHub profile URL
- *                 linkedInProfile:
+ *                 linkedinProfile:
  *                   type: string
  *                   description: User's LinkedIn profile URL
- *                 file:
- *                   type: string
+ *                 avatar:
+ *                   type: file
  *                   format: binary
  *                   description: Avatar image file (JPEG, PNG, etc.)
  *               required:
@@ -51,7 +51,6 @@
  *                 - lastName
  *                 - password
  *                 - email
- *                 - userName
  *       responses:
  *         '201':
  *           description: User successfully created
@@ -188,6 +187,8 @@
  *       summary: Refresh access token
  *       tags:
  *         - Authentication
+ *       security:
+ *         - BearerAuth: []
  *       responses:
  *         '200':
  *           description: New access token generated successfully
