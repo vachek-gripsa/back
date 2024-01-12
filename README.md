@@ -64,8 +64,6 @@ This server application is developed using the following technologies and librar
 - **Dotenv (v16.3.1):** Zero-dependency module that loads environment variables from a .env file
   into process.env.
 - **Winston (v3.11.0):** A versatile logging library.
-- **dotenv (v16.3.1):** Zero-dependency module that loads environment variables from a .env file
-  into process.env.
 
 ### Additional Requirements
 
