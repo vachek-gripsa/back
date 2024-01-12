@@ -94,9 +94,9 @@ For local deployment, use develop branches. Follow these commands:
 
 ### Development Scripts
 
-- **npm start** Run the server.
-- **npm run dev** Run the server in development mode using.
-- **npm run lint** Lint the project using ESLint with the specified configuration.
+- `**npm start**` Run the server.
+- `**npm run dev**` Run the server in development mode using.
+- `**npm run lint**` Lint the project using ESLint with the specified configuration.
 
 ## Architecture Overview
 
