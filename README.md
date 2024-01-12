@@ -1,6 +1,6 @@
 # Vachek-Gripsa Project
 
-This documentation pertains to the server-side component of the project. Frontend repository link:
+This documentation pertains to the server part of the project. Frontend repository link:
 
 - [Frontend Repository](https://github.com/vachek-gripsa/front)
 - [Deployed Project]()
