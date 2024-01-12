@@ -7,7 +7,7 @@ import swaggerUi from 'swagger-ui-express';
 
 import { swaggerDocs, logger, fileFilter, fileStorage, headers } from '../config/index.js';
 import { errorMiddleware } from '../middleware/index.js';
-import { testRouter, authRouter } from '../routes/index.js';
+import { testRouter, authRouter, userRouter } from '../routes/index.js';
 
 /* define server */
 export const app = express();
@@ -35,6 +35,7 @@ app.use((req, res, next) => {
 /* define server router */
 app.use('/api/test', testRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/user', userRouter);
 
 app.use('/', (req, res) => {
   res.redirect('/api-docs');

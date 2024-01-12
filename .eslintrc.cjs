@@ -19,12 +19,19 @@ module.exports = {
       parserOptions: {
         sourceType: 'script'
       }
+    },
+    {
+      files: ['README.md'],
+      rules: {
+        'prettier/prettier': 'off'
+      }
     }
   ],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module'
   },
+  ignorePatterns: ['README.md'],
   rules: {
     'import/order': [
       'error',
